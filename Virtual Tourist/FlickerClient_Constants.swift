@@ -20,7 +20,7 @@ extension FlickrClient{
         static let NO_JSON_CALLBACK = "1"
         static let MAXIMUM_PER_PAGE = "240" //24*10 to say something
         static let boxSideLength = 0.07
-        static let picturesToShow = 24 //limit of pictures to show on collection
+        static let picturesToShow = 24 //limit of pictures to show on collection. Took the idea from the udacity forum
     }
     
     struct JSONResult{
