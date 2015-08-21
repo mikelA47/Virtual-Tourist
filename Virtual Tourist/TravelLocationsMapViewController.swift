@@ -11,7 +11,7 @@ import MapKit
 import CoreData
 
 
-class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate {
+class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
 
@@ -40,18 +40,25 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate,UISea
         self.mapView.centerCoordinate = CLLocationCoordinate2D(latitude: self.map[0].latitude,
             longitude: self.map[0].longitude)
         self.mapView.camera.altitude = self.map[0].zoom*/
+        println(1)
         map = fetchMap()
+        println(2)
         if map.count == 0 {
-            map.append(Map(latitude: -3.831239, longitude: -78.183406, zoom: 50000000, context: self.sharedContext))
+                    println(3)
+           // map.append(Map(latitude: Double(-3.831239), longitude: Double(-78.183406), zoom: 50000000, context: self.sharedContext))
+           // self.map.append(Map(latitude: -3.831239, longitude: -78.183406, zoom: 50000, context: self.sharedContext))
+            self.map[0].latitude = self.mapView.centerCoordinate.latitude
+            self.map[0].longitude = self.mapView.centerCoordinate.longitude
+            self.map[0].zoom = self.mapView.camera.altitude
+                    println(4)
         }
         
         //Sets the map zoom.
-        self.mapView?.camera.altitude = map[0].zoom
+        //self.mapView?.camera.altitude = map[0].zoom
         
         //Sets the center of the map.
-        self.mapView?.centerCoordinate = CLLocationCoordinate2D(latitude: map[0].latitude, longitude: map[0].longitude)
+        //self.mapView?.centerCoordinate = CLLocationCoordinate2D(latitude: map[0].latitude, longitude: map[0].longitude)
         
-        self.mapView.delegate = self
         self.mapView.delegate = self
         self.longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "action:")
         self.longPressGestureRecognizer.minimumPressDuration = 2
@@ -111,6 +118,7 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate,UISea
     override func viewWillDisappear(animated: Bool) {
         self.navigationController?.toolbarHidden = true
     }
+    
     //Core data
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext!
@@ -246,13 +254,13 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate,UISea
     }
 
     //Saves map state
-    func mapView( mapView: MKMapView!, regionDidChangeAnimated animated: Bool){
+    
+    func saveMapRegion2() {
         self.map[0].latitude = self.mapView.centerCoordinate.latitude
         self.map[0].longitude = self.mapView.centerCoordinate.longitude
         self.map[0].zoom = self.mapView.camera.altitude
         CoreDataStackManager.sharedInstance().saveContext()
     }
-
     
     //************************ iOS persistance code example **********************************//
     
@@ -314,9 +322,9 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate,UISea
     *  that it can save the new region.
     */
 
- /*   extension TravelLocationsMapViewController : MKMapViewDelegate {
+    extension TravelLocationsMapViewController : MKMapViewDelegate {
 
         func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool) {
-            saveMapRegion()
+            saveMapRegion2()
         }
-    }*/
+    }
