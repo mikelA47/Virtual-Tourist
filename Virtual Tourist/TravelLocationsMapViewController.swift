@@ -19,7 +19,7 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate {
     var selectedPin:Pin!
     var poweredPins = [Int:Pin]() //Hash dictionary to organize annotations with their pins
     
-    var map = [Map]() //New entity to exceed expectations 21/08/2015
+    var map = [Map]() //New entity to exceed expectations 21/08/2015, still something does not work
     
     var firstDrop = true
     var longPressGestureRecognizer:UILongPressGestureRecognizer!
@@ -30,35 +30,8 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBarHidden = true
-        //self.restoreMapRegion() // restore map info
-     /*   map.append(Map(latitude: -2.934251, longitude: 43.266574, zoom: 50000000, context: self.sharedContext))
-        self.map = self.fetchMap()
-        if self.map.count == 0 {
-            //If there is no map saved, center to Bilbao like tha app On the Map
-            //map.append(Map(latitude: -2.934251, longitude: 43.266574, zoom: 50000000, context: self.sharedContext))
-        }
-        self.mapView.centerCoordinate = CLLocationCoordinate2D(latitude: self.map[0].latitude,
-            longitude: self.map[0].longitude)
-        self.mapView.camera.altitude = self.map[0].zoom*/
-        println(1)
+        self.restoreMapRegion() // restore map info
         map = fetchMap()
-        println(2)
-        if map.count == 0 {
-                    println(3)
-           // map.append(Map(latitude: Double(-3.831239), longitude: Double(-78.183406), zoom: 50000000, context: self.sharedContext))
-           // self.map.append(Map(latitude: -3.831239, longitude: -78.183406, zoom: 50000, context: self.sharedContext))
-            self.map[0].latitude = self.mapView.centerCoordinate.latitude
-            self.map[0].longitude = self.mapView.centerCoordinate.longitude
-            self.map[0].zoom = self.mapView.camera.altitude
-                    println(4)
-        }
-        
-        //Sets the map zoom.
-        //self.mapView?.camera.altitude = map[0].zoom
-        
-        //Sets the center of the map.
-        //self.mapView?.centerCoordinate = CLLocationCoordinate2D(latitude: map[0].latitude, longitude: map[0].longitude)
-        
         self.mapView.delegate = self
         self.longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "action:")
         self.longPressGestureRecognizer.minimumPressDuration = 2
@@ -83,7 +56,7 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate {
         return results as! [Map]
     }
     
-    func restoreMapRegion()
+    func restoreMapRegionMap()
     {
         self.map = self.fetchMap()
         if self.map.count != 0 {
@@ -91,7 +64,7 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate {
                 longitude: self.map[0].longitude)
             self.mapView.camera.altitude = self.map[0].zoom
         } else {
-            //If there is no map saved, center to Bilbao like tha app On the Map
+            //If there is no map saved, center to Bilbao like the app On the Map
             map.append(Map(latitude: -2.934251, longitude: 43.266574, zoom: 50000000, context: self.sharedContext))
         }
     }
@@ -268,7 +241,7 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate {
 
     // Here we use the same filePath strategy as the Persistent Master Detail
     // A convenient property
- /*   var filePath : String {
+    var filePath : String {
         let manager = NSFileManager.defaultManager()
         let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
         return url.URLByAppendingPathComponent("mapRegionArchive").path!
@@ -312,7 +285,6 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate {
             mapView.setRegion(savedRegion, animated: false)
         }
     }
-    */
 
     }
 
@@ -325,6 +297,6 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate {
     extension TravelLocationsMapViewController : MKMapViewDelegate {
 
         func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool) {
-            saveMapRegion2()
+            saveMapRegion()
         }
     }

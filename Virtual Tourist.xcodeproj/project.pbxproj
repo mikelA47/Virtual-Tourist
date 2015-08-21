@@ -17,7 +17,6 @@
 		D8EC79E21B7A7C8900627444 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8EC79E11B7A7C8900627444 /* CoreDataStackManager.swift */; };
 		D8ED0FE61B87462100FFBC05 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ED0FE51B87462100FFBC05 /* Map.swift */; };
 		D8ED2D711B692AF100612440 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ED2D701B692AF100612440 /* AppDelegate.swift */; };
-		D8ED2D731B692AF100612440 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ED2D721B692AF100612440 /* ViewController.swift */; };
 		D8ED2D761B692AF100612440 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8ED2D741B692AF100612440 /* Main.storyboard */; };
 		D8ED2D781B692AF100612440 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8ED2D771B692AF100612440 /* Images.xcassets */; };
 		D8ED2D7B1B692AF100612440 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8ED2D791B692AF100612440 /* LaunchScreen.xib */; };
@@ -50,7 +49,6 @@
 		D8ED2D6B1B692AF100612440 /* Virtual Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8ED2D6F1B692AF100612440 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8ED2D701B692AF100612440 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D8ED2D721B692AF100612440 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D8ED2D751B692AF100612440 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D8ED2D771B692AF100612440 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D8ED2D7A1B692AF100612440 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -129,7 +127,6 @@
 				D8EC79E31B7A7EF700627444 /* Networking */,
 				D8EC79D31B7A667300627444 /* Model */,
 				D8ED2D701B692AF100612440 /* AppDelegate.swift */,
-				D8ED2D721B692AF100612440 /* ViewController.swift */,
 				D8ED2D741B692AF100612440 /* Main.storyboard */,
 				D8ED2D771B692AF100612440 /* Images.xcassets */,
 				D8ED2D791B692AF100612440 /* LaunchScreen.xib */,
@@ -283,7 +280,6 @@
 				D8ED0FE61B87462100FFBC05 /* Map.swift in Sources */,
 				D8EC1A461B75105D00490632 /* CollectionViewCell.swift in Sources */,
 				D8F54E231B761A6400CDCD52 /* FlickrClient.swift in Sources */,
-				D8ED2D731B692AF100612440 /* ViewController.swift in Sources */,
 				D86C3E531B7E574C008E1F5F /* FlickerClient_Constants.swift in Sources */,
 				D86C3E511B7E552D008E1F5F /* ImageCache.swift in Sources */,
 				D8EC79D81B7A6CDC00627444 /* Pin.swift in Sources */,
