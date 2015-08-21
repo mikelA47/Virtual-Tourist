@@ -165,7 +165,7 @@ class PictureCollectionViewController: UIViewController,UICollectionViewDelegate
     //Put the received pin on place
     func setPinSelectedToMap(){
         let span = MKCoordinateSpanMake(2, 2)
-        var coordinates = CLLocationCoordinate2D(latitude: Double(pin.latitude), longitude: Double(pin.longitude))
+        var coordinates = CLLocationCoordinate2D(latitude: Double(self.pin.latitude), longitude: Double(self.pin.longitude))
         let region = MKCoordinateRegion(center: coordinates, span: span)
         var tempAnnotation = MKPointAnnotation()
         tempAnnotation.coordinate = coordinates

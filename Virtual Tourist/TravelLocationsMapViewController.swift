@@ -31,6 +31,7 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate,UISea
         self.navigationController?.navigationBarHidden = true
         self.restoreMapRegion() // restore map info
         self.longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "action:")
+        self.longPressGestureRecognizer.minimumPressDuration = 2
         self.view.addGestureRecognizer(self.longPressGestureRecognizer)
         self.fetchedResultsController.performFetch(nil)
 
@@ -138,12 +139,43 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate,UISea
     //MARK: MapView Related
     
     //Select pin
+    /**************** I think the problem was here ********** Download pictures when selected a pin if there are no pictures
+        don´t rely on prefeched pictures alone
+    */
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
         let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("PictureCollection")! as! PictureCollectionViewController
-        detailController.pin = self.poweredPins[view.annotation.hash]
-        dispatch_async(dispatch_get_main_queue()) {
-            self.navigationController!.pushViewController(detailController, animated: true)
+        if let pin_ = self.poweredPins[view.annotation.hash]{
+            detailController.pin = pin_
+            self.selectedPin = pin_
+            if let pictures = pin_.photos{
+                if pictures.isEmpty { //No pictures? download new ones
+                    FlickrClient.sharedInstance().searchPicturesForPin(self.selectedPin) { (success,picturesArray, errorString) in
+                        if success {
+                            dispatch_async(dispatch_get_main_queue()) {
+                                detailController.pin = pin_
+                                if let pictures = picturesArray{
+                                    for picture in pictures{
+                                        let picture_ = Photo(dictionary: ["title":picture[0],"path":picture[1]], context: self.sharedContext)
+                                        picture_.pin = self.selectedPin
+                                    }
+                                }
+                                CoreDataStackManager.sharedInstance().saveContext()
+                                self.navigationController!.pushViewController(detailController, animated: true)
+                            }
+                        } else {
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.mapView.removeAnnotation(view.annotation)
+                                CoreDataStackManager.sharedInstance().deleteObject(self.selectedPin)
+                                println(errorString!)//No pictures
+                            })
+                        }
+                    }
+                }else{
+                    self.navigationController!.pushViewController(detailController, animated: true)
+                }
+            }
         }
+        self.mapView.deselectAnnotation(view.annotation, animated: false)
     }
     
     //Config pin
