@@ -26,7 +26,7 @@ class FlickrClient: NSObject {
     }
     
     var sharedContext: NSManagedObjectContext {
-        return CoreDataStackManager.sharedInstance().managedObjectContext!
+        return CoreDataStackManager.sharedInstance.managedObjectContext!
     }
     
     //Function to parse properly both types so we can generate a random number
@@ -72,7 +72,7 @@ class FlickrClient: NSObject {
             "page":String(page)
         ]
         
-        FlickrClient.sharedInstance().taskForResource(resource, parameters: parameters){ JSONResult, error  in
+        FlickrClient.sharedInstance.taskForResource(resource, parameters: parameters){ JSONResult, error  in
             if let error = error {
                 println(error)
             } else {
@@ -254,7 +254,8 @@ class FlickrClient: NSObject {
     
     
     // MARK: - Shared Instance
-    
+    //Suggestion made by reviwer -> take adavntage of a class static/constant
+    /*
     class func sharedInstance() -> FlickrClient {
         
         struct Singleton {
@@ -262,7 +263,9 @@ class FlickrClient: NSObject {
         }
         
         return Singleton.sharedInstance
-    }
+    }*/
+    
+    static let sharedInstance = FlickrClient()
     
     // MARK: - Shared Date Formatter
     

@@ -45,7 +45,7 @@ class PictureCollectionViewController: UIViewController,UICollectionViewDelegate
     
     // MARK: - Core Data
     var sharedContext: NSManagedObjectContext {
-        return CoreDataStackManager.sharedInstance().managedObjectContext!
+        return CoreDataStackManager.sharedInstance.managedObjectContext!
     }
     
     //Core Data
@@ -101,14 +101,14 @@ class PictureCollectionViewController: UIViewController,UICollectionViewDelegate
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
         
         //If there is an image assigned to the cell, if not call client to make a request for image
-        if let image = NSKeyedUnarchiver.unarchiveObjectWithFile(FlickrClient.sharedInstance().parseImagePath(preLoadedPictures![indexPath.row].path.lastPathComponent)) as? UIImage {
+        if let image = NSKeyedUnarchiver.unarchiveObjectWithFile(FlickrClient.sharedInstance.parseImagePath(preLoadedPictures![indexPath.row].path.lastPathComponent)) as? UIImage {
             cell.activityView.stopAnimating() //requirment - stop activity indicator
             cell.activityView.hidesWhenStopped = true //and hide
             cell.imageCell.image = image
         }else{
             cell.activityView.startAnimating()//requirment - start activity indicator
             cell.imageCell.image = UIImage(named: "cellImage") //Default placeholder called cellImage (Udacity app icon?)
-            FlickrClient.sharedInstance().requestImageForCell(preLoadedPictures![indexPath.row].path,cell: cell,completionHandler: { (success, errorString) in
+            FlickrClient.sharedInstance.requestImageForCell(preLoadedPictures![indexPath.row].path,cell: cell,completionHandler: { (success, errorString) in
                 if success {
                     dispatch_async(dispatch_get_main_queue(), {
                         cell.activityView.stopAnimating()//requirment - stop activity indicator
@@ -128,7 +128,7 @@ class PictureCollectionViewController: UIViewController,UICollectionViewDelegate
     //requirment - If cell/image selected -> delete
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath:NSIndexPath){
         let picture = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
-        CoreDataStackManager.sharedInstance().deleteObject(picture)
+        CoreDataStackManager.sharedInstance.deleteObject(picture)
     }
     
     //To create a new collection of pictures we do it in three steps. 
@@ -139,17 +139,17 @@ class PictureCollectionViewController: UIViewController,UICollectionViewDelegate
     //If the new download did not go rigth we don´t do anything
     @IBAction func newCollectionPressed(sender: AnyObject) {
         self.newCollectionButton.enabled = false
-        FlickrClient.sharedInstance().searchPicturesForPin(pin) { (success,picturesArray, errorString) in
+        FlickrClient.sharedInstance.searchPicturesForPin(pin) { (success,picturesArray, errorString) in
             if success {
                 dispatch_async(dispatch_get_main_queue(), {
                     for picPin in self.pin.photos!{
-                        CoreDataStackManager.sharedInstance().deleteObject(picPin)
+                        CoreDataStackManager.sharedInstance.deleteObject(picPin)
                     }
                     if let pictures = picturesArray{
                         for picture in pictures{
                             let picture_ = Photo(dictionary: ["title":picture[0],"path":picture[1]], context: self.sharedContext)
                             picture_.pin = self.pin
-                            CoreDataStackManager.sharedInstance().saveContext()
+                            CoreDataStackManager.sharedInstance.saveContext()
                         }
                     }
                     self.newCollectionButton.enabled = true

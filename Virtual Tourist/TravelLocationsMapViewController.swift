@@ -94,7 +94,7 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate {
     
     //Core data
     var sharedContext: NSManagedObjectContext {
-        return CoreDataStackManager.sharedInstance().managedObjectContext!
+        return CoreDataStackManager.sharedInstance.managedObjectContext!
     }
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
@@ -136,7 +136,7 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate {
             self.firstDrop = false
             self.selectedPin = Pin(dictionary: ["latitude":self.annotation.coordinate.latitude,"longitude":self.annotation.coordinate.longitude], context: sharedContext)
             
-            FlickrClient.sharedInstance().searchPicturesForPin(self.selectedPin) { (success,picturesArray, errorString) in
+            FlickrClient.sharedInstance.searchPicturesForPin(self.selectedPin) { (success,picturesArray, errorString) in
             //same as done in newCollectionButtonPressed() function or the other way arround
                 if success {
                     if let pictures = picturesArray{
@@ -145,7 +145,7 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate {
                             picture_.pin = self.selectedPin
                         }
                     }
-                    CoreDataStackManager.sharedInstance().saveContext()
+                    CoreDataStackManager.sharedInstance.saveContext()
                     let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("PictureCollection")! as! PictureCollectionViewController
                     //pass the pin selected
                     detailController.pin = self.selectedPin
@@ -159,7 +159,7 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate {
                 } else {
                     dispatch_async(dispatch_get_main_queue(), {
                         self.mapView.removeAnnotation(self.annotation)
-                        CoreDataStackManager.sharedInstance().deleteObject(self.selectedPin)
+                        CoreDataStackManager.sharedInstance.deleteObject(self.selectedPin)
                         println(errorString!) //No pictures to download
                     })
                 }
@@ -180,7 +180,7 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate {
             self.selectedPin = pin_
             if let pictures = pin_.photos{
                 if pictures.isEmpty { //No pictures? download new ones
-                    FlickrClient.sharedInstance().searchPicturesForPin(self.selectedPin) { (success,picturesArray, errorString) in
+                    FlickrClient.sharedInstance.searchPicturesForPin(self.selectedPin) { (success,picturesArray, errorString) in
                         if success {
                             dispatch_async(dispatch_get_main_queue()) {
                                 detailController.pin = pin_
@@ -190,13 +190,13 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate {
                                         picture_.pin = self.selectedPin
                                     }
                                 }
-                                CoreDataStackManager.sharedInstance().saveContext()
+                                CoreDataStackManager.sharedInstance.saveContext()
                                 self.navigationController!.pushViewController(detailController, animated: true)
                             }
                         } else {
                             dispatch_async(dispatch_get_main_queue(), {
                                 self.mapView.removeAnnotation(view.annotation)
-                                CoreDataStackManager.sharedInstance().deleteObject(self.selectedPin)
+                                CoreDataStackManager.sharedInstance.deleteObject(self.selectedPin)
                                 println(errorString!)//No pictures
                             })
                         }
@@ -232,7 +232,7 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate {
         self.map[0].latitude = self.mapView.centerCoordinate.latitude
         self.map[0].longitude = self.mapView.centerCoordinate.longitude
         self.map[0].zoom = self.mapView.camera.altitude
-        CoreDataStackManager.sharedInstance().saveContext()
+        CoreDataStackManager.sharedInstance.saveContext()
     }
     
     //************************ iOS persistance code example **********************************//
