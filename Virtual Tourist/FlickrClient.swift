@@ -92,11 +92,11 @@ class FlickrClient: NSObject {
                             } else {
                                 picturesToShow = totalPictures
                             }
-                            
+                            dispatch_async(dispatch_get_main_queue(), {
                             if let totalPicturesPages = picturesDictionary[FlickrClient.JSONResult.pages] as? Int {
                                 pin.pages = totalPicturesPages
                             }
-                            
+                            })
                             var alreadyRandom:[Int] = [] //used random numbers
                             var random: Int //unique random number to be used
                             var helperArray = [[String]]()//to store title and URL

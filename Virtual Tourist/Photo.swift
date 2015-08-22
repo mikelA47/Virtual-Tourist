@@ -29,6 +29,8 @@ class Photo: NSManagedObject{
     
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         let entity =  NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!
+        
+
         super.init(entity: entity,insertIntoManagedObjectContext: context)
         
         self.title = dictionary[Keys.Title] as! String
@@ -36,7 +38,6 @@ class Photo: NSManagedObject{
         if var imagePath = dictionary[Keys.Path] as? String {
             self.path = imagePath
         }
-        
     }
     
     var image: UIImage? {

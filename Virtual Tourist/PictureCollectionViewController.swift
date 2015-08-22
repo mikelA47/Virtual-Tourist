@@ -146,10 +146,12 @@ class PictureCollectionViewController: UIViewController,UICollectionViewDelegate
                         CoreDataStackManager.sharedInstance.deleteObject(picPin)
                     }
                     if let pictures = picturesArray{
-                        for picture in pictures{
+                        for picture in pictures {
+                           // dispatch_async(dispatch_get_main_queue(), {
                             let picture_ = Photo(dictionary: ["title":picture[0],"path":picture[1]], context: self.sharedContext)
                             picture_.pin = self.pin
                             CoreDataStackManager.sharedInstance.saveContext()
+                            //})
                         }
                     }
                     self.newCollectionButton.enabled = true

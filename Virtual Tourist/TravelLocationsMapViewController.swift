@@ -139,13 +139,17 @@ class TravelLocationsMapViewController: UIViewController,MKMapViewDelegate {
             FlickrClient.sharedInstance.searchPicturesForPin(self.selectedPin) { (success,picturesArray, errorString) in
             //same as done in newCollectionButtonPressed() function or the other way arround
                 if success {
+                    dispatch_async(dispatch_get_main_queue(), {
                     if let pictures = picturesArray{
-                        for picture in pictures{
+                        for picture in pictures {
+                            
                             let picture_ = Photo(dictionary: ["title":picture[0],"path":picture[1]], context: self.sharedContext)
                             picture_.pin = self.selectedPin
+                        
                         }
                     }
                     CoreDataStackManager.sharedInstance.saveContext()
+                    })
                     let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("PictureCollection")! as! PictureCollectionViewController
                     //pass the pin selected
                     detailController.pin = self.selectedPin
